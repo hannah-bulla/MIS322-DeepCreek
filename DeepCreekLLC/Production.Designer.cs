@@ -31,105 +31,337 @@
             txtGood = new TextBox();
             lblDefect = new Label();
             txtDefect = new TextBox();
-            btnSaveBatch = new Button();
-            btnClear = new Button();
+            this.btnSaveBatch = new Button();
+            this.btnClear = new Button();
             lblGridTitle = new Label();
             dgvBatches = new DataGridView();
-            btnEdit = new Button();
-            btnDelete = new Button();
-            btnExport = new Button();
-
+            this.btnEdit = new Button();
+            this.btnDelete = new Button();
+            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn6 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn7 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn8 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn9 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn10 = new DataGridViewTextBoxColumn();
             grpBatch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvBatches).BeginInit();
             SuspendLayout();
-
+            // 
             // grpBatch
-            grpBatch.Text = "Batch Entry";
+            // 
+            grpBatch.Controls.Add(lblBatchCode);
+            grpBatch.Controls.Add(txtBatchCode);
+            grpBatch.Controls.Add(lblBatchDate);
+            grpBatch.Controls.Add(dtpBatchDate);
+            grpBatch.Controls.Add(lblLine);
+            grpBatch.Controls.Add(cboLine);
+            grpBatch.Controls.Add(lblShift);
+            grpBatch.Controls.Add(cboShift);
+            grpBatch.Controls.Add(lblRodModel);
+            grpBatch.Controls.Add(cboRodModel);
+            grpBatch.Controls.Add(lblPlanned);
+            grpBatch.Controls.Add(txtPlanned);
+            grpBatch.Controls.Add(lblActual);
+            grpBatch.Controls.Add(txtActual);
+            grpBatch.Controls.Add(lblGood);
+            grpBatch.Controls.Add(txtGood);
+            grpBatch.Controls.Add(lblDefect);
+            grpBatch.Controls.Add(txtDefect);
+            grpBatch.Controls.Add(this.btnSaveBatch);
+            grpBatch.Controls.Add(this.btnClear);
             grpBatch.Location = new Point(8, 8);
+            grpBatch.Name = "grpBatch";
             grpBatch.Size = new Size(960, 110);
-            grpBatch.Controls.AddRange(new Control[] {
-                lblBatchCode, txtBatchCode, lblBatchDate, dtpBatchDate,
-                lblLine, cboLine, lblShift, cboShift, lblRodModel, cboRodModel,
-                lblPlanned, txtPlanned, lblActual, txtActual,
-                lblGood, txtGood, lblDefect, txtDefect,
-                btnSaveBatch, btnClear
-            });
-
-            int y1 = 20, y2 = 60;
-
-            lblBatchCode.Text = "Batch Code *"; lblBatchCode.Location = new Point(8, y1); lblBatchCode.AutoSize = true;
-            txtBatchCode.Location = new Point(8, y2); txtBatchCode.Size = new Size(110, 23);
-
-            lblBatchDate.Text = "Batch Date *"; lblBatchDate.Location = new Point(128, y1); lblBatchDate.AutoSize = true;
-            dtpBatchDate.Location = new Point(128, y2); dtpBatchDate.Size = new Size(120, 23); dtpBatchDate.Format = DateTimePickerFormat.Short;
-
-            lblLine.Text = "Production Line *"; lblLine.Location = new Point(258, y1); lblLine.AutoSize = true;
-            cboLine.Location = new Point(258, y2); cboLine.Size = new Size(90, 23); cboLine.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboLine.Items.AddRange(new object[] { "Line 1", "Line 2" }); cboLine.SelectedIndex = 0;
-
-            lblShift.Text = "Shift *"; lblShift.Location = new Point(358, y1); lblShift.AutoSize = true;
-            cboShift.Location = new Point(358, y2); cboShift.Size = new Size(60, 23); cboShift.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboShift.Items.AddRange(new object[] { "1", "2" }); cboShift.SelectedIndex = 0;
-
-            lblRodModel.Text = "Rod Model *"; lblRodModel.Location = new Point(428, y1); lblRodModel.AutoSize = true;
-            cboRodModel.Location = new Point(428, y2); cboRodModel.Size = new Size(250, 23); cboRodModel.DropDownStyle = ComboBoxStyle.DropDownList;
+            grpBatch.TabIndex = 0;
+            grpBatch.TabStop = false;
+            grpBatch.Text = "Batch Entry";
+            // 
+            // lblBatchCode
+            // 
+            lblBatchCode.AutoSize = true;
+            lblBatchCode.Location = new Point(8, 20);
+            lblBatchCode.Name = "lblBatchCode";
+            lblBatchCode.Size = new Size(76, 15);
+            lblBatchCode.TabIndex = 0;
+            lblBatchCode.Text = "Batch Code *";
+            // 
+            // txtBatchCode
+            // 
+            txtBatchCode.Location = new Point(8, 60);
+            txtBatchCode.Name = "txtBatchCode";
+            txtBatchCode.Size = new Size(110, 23);
+            txtBatchCode.TabIndex = 1;
+            // 
+            // lblBatchDate
+            // 
+            lblBatchDate.AutoSize = true;
+            lblBatchDate.Location = new Point(128, 20);
+            lblBatchDate.Name = "lblBatchDate";
+            lblBatchDate.Size = new Size(72, 15);
+            lblBatchDate.TabIndex = 2;
+            lblBatchDate.Text = "Batch Date *";
+            // 
+            // dtpBatchDate
+            // 
+            dtpBatchDate.Format = DateTimePickerFormat.Short;
+            dtpBatchDate.Location = new Point(128, 60);
+            dtpBatchDate.Name = "dtpBatchDate";
+            dtpBatchDate.Size = new Size(120, 23);
+            dtpBatchDate.TabIndex = 3;
+            // 
+            // lblLine
+            // 
+            lblLine.AutoSize = true;
+            lblLine.Location = new Point(258, 20);
+            lblLine.Name = "lblLine";
+            lblLine.Size = new Size(99, 15);
+            lblLine.TabIndex = 4;
+            lblLine.Text = "Production Line *";
+            // 
+            // cboLine
+            // 
+            cboLine.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboLine.Items.AddRange(new object[] { "Line 1", "Line 2" });
+            cboLine.Location = new Point(258, 60);
+            cboLine.Name = "cboLine";
+            cboLine.Size = new Size(90, 23);
+            cboLine.TabIndex = 5;
+            // 
+            // lblShift
+            // 
+            lblShift.AutoSize = true;
+            lblShift.Location = new Point(358, 20);
+            lblShift.Name = "lblShift";
+            lblShift.Size = new Size(39, 15);
+            lblShift.TabIndex = 6;
+            lblShift.Text = "Shift *";
+            // 
+            // cboShift
+            // 
+            cboShift.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboShift.Items.AddRange(new object[] { "1", "2" });
+            cboShift.Location = new Point(358, 60);
+            cboShift.Name = "cboShift";
+            cboShift.Size = new Size(60, 23);
+            cboShift.TabIndex = 7;
+            // 
+            // lblRodModel
+            // 
+            lblRodModel.AutoSize = true;
+            lblRodModel.Location = new Point(428, 20);
+            lblRodModel.Name = "lblRodModel";
+            lblRodModel.Size = new Size(73, 15);
+            lblRodModel.TabIndex = 8;
+            lblRodModel.Text = "Rod Model *";
+            // 
+            // cboRodModel
+            // 
+            cboRodModel.DropDownStyle = ComboBoxStyle.DropDownList;
             cboRodModel.Items.AddRange(new object[] { "BR0906E — Better 9'6\" Extra Fast", "PR0906M — Primo 9'6\" Moderate", "GD0806F — Good 8'6\" Fast" });
-            cboRodModel.SelectedIndex = 0;
-
-            lblPlanned.Text = "Planned Qty"; lblPlanned.Location = new Point(688, y1); lblPlanned.AutoSize = true;
-            txtPlanned.Location = new Point(688, y2); txtPlanned.Size = new Size(60, 23);
-
-            lblActual.Text = "Actual Qty"; lblActual.Location = new Point(758, y1); lblActual.AutoSize = true;
-            txtActual.Location = new Point(758, y2); txtActual.Size = new Size(60, 23);
-
-            lblGood.Text = "Good Units"; lblGood.Location = new Point(828, y1); lblGood.AutoSize = true;
-            txtGood.Location = new Point(828, y2); txtGood.Size = new Size(55, 23);
-
-            lblDefect.Text = "Defect Units"; lblDefect.Location = new Point(893, y1); lblDefect.AutoSize = true;
-            txtDefect.Location = new Point(893, y2); txtDefect.Size = new Size(55, 23);
-
-            btnSaveBatch.Text = "Save Batch"; btnSaveBatch.Location = new Point(8, 85); btnSaveBatch.Size = new Size(85, 23);
-            btnClear.Text = "Clear"; btnClear.Location = new Point(99, 85); btnClear.Size = new Size(60, 23);
-            btnClear.Click += new EventHandler(this.btnClear_Click);
-
-            // Grid title
-            lblGridTitle.Text = "Production Batch Grid";
-            lblGridTitle.Location = new Point(8, 124);
+            cboRodModel.Location = new Point(428, 60);
+            cboRodModel.Name = "cboRodModel";
+            cboRodModel.Size = new Size(250, 23);
+            cboRodModel.TabIndex = 9;
+            // 
+            // lblPlanned
+            // 
+            lblPlanned.AutoSize = true;
+            lblPlanned.Location = new Point(688, 20);
+            lblPlanned.Name = "lblPlanned";
+            lblPlanned.Size = new Size(72, 15);
+            lblPlanned.TabIndex = 10;
+            lblPlanned.Text = "Planned Qty";
+            // 
+            // txtPlanned
+            // 
+            txtPlanned.Location = new Point(688, 60);
+            txtPlanned.Name = "txtPlanned";
+            txtPlanned.Size = new Size(60, 23);
+            txtPlanned.TabIndex = 11;
+            // 
+            // lblActual
+            // 
+            lblActual.AutoSize = true;
+            lblActual.Location = new Point(758, 20);
+            lblActual.Name = "lblActual";
+            lblActual.Size = new Size(63, 15);
+            lblActual.TabIndex = 12;
+            lblActual.Text = "Actual Qty";
+            // 
+            // txtActual
+            // 
+            txtActual.Location = new Point(758, 60);
+            txtActual.Name = "txtActual";
+            txtActual.Size = new Size(60, 23);
+            txtActual.TabIndex = 13;
+            // 
+            // lblGood
+            // 
+            lblGood.AutoSize = true;
+            lblGood.Location = new Point(828, 20);
+            lblGood.Name = "lblGood";
+            lblGood.Size = new Size(66, 15);
+            lblGood.TabIndex = 14;
+            lblGood.Text = "Good Units";
+            // 
+            // txtGood
+            // 
+            txtGood.Location = new Point(828, 60);
+            txtGood.Name = "txtGood";
+            txtGood.Size = new Size(55, 23);
+            txtGood.TabIndex = 15;
+            // 
+            // lblDefect
+            // 
+            lblDefect.AutoSize = true;
+            lblDefect.Location = new Point(893, 20);
+            lblDefect.Name = "lblDefect";
+            lblDefect.Size = new Size(71, 15);
+            lblDefect.TabIndex = 16;
+            lblDefect.Text = "Defect Units";
+            // 
+            // txtDefect
+            // 
+            txtDefect.Location = new Point(893, 60);
+            txtDefect.Name = "txtDefect";
+            txtDefect.Size = new Size(55, 23);
+            txtDefect.TabIndex = 17;
+            // 
+            // btnSaveBatch
+            // 
+            this.btnSaveBatch.Location = new Point(8, 85);
+            this.btnSaveBatch.Name = "btnSaveBatch";
+            this.btnSaveBatch.Size = new Size(85, 23);
+            this.btnSaveBatch.TabIndex = 18;
+            this.btnSaveBatch.Text = "Save Batch";
+            // 
+            // btnClear
+            // 
+            this.btnClear.Location = new Point(99, 85);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new Size(60, 23);
+            this.btnClear.TabIndex = 19;
+            this.btnClear.Text = "Clear";
+            this.btnClear.Click += this.btnClear_Click;
+            // 
+            // lblGridTitle
+            // 
             lblGridTitle.AutoSize = true;
-            lblGridTitle.Font = new Font(Font, FontStyle.Bold);
-
+            lblGridTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblGridTitle.Location = new Point(8, 124);
+            lblGridTitle.Name = "lblGridTitle";
+            lblGridTitle.Size = new Size(130, 15);
+            lblGridTitle.TabIndex = 1;
+            lblGridTitle.Text = "Production Batch Grid";
+            // 
             // dgvBatches
-            dgvBatches.Location = new Point(8, 144);
-            dgvBatches.Size = new Size(960, 200);
-            dgvBatches.ReadOnly = true;
+            // 
             dgvBatches.AllowUserToAddRows = false;
-            dgvBatches.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvBatches.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvBatches.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvBatches.Columns.Add("BatchCode", "Batch Code");
-            dgvBatches.Columns.Add("Date", "Date");
-            dgvBatches.Columns.Add("Line", "Line");
-            dgvBatches.Columns.Add("Shift", "Shift");
-            dgvBatches.Columns.Add("Model", "Model");
-            dgvBatches.Columns.Add("Planned", "Planned");
-            dgvBatches.Columns.Add("Actual", "Actual");
-            dgvBatches.Columns.Add("Good", "Good");
-            dgvBatches.Columns.Add("Defects", "Defects");
-            dgvBatches.Columns.Add("DefectPercent", "Defect %");
-
-            btnEdit.Text = "Edit Selected"; btnEdit.Location = new Point(8, 352); btnEdit.Size = new Size(90, 23);
-            btnDelete.Text = "Delete Selected"; btnDelete.Location = new Point(104, 352); btnDelete.Size = new Size(100, 23);
-            btnExport.Text = "Export Grid"; btnExport.Location = new Point(210, 352); btnExport.Size = new Size(85, 23);
-
-            // Form
+            dgvBatches.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4, dataGridViewTextBoxColumn5, dataGridViewTextBoxColumn6, dataGridViewTextBoxColumn7, dataGridViewTextBoxColumn8, dataGridViewTextBoxColumn9, dataGridViewTextBoxColumn10 });
+            dgvBatches.Location = new Point(8, 144);
+            dgvBatches.Name = "dgvBatches";
+            dgvBatches.ReadOnly = true;
+            dgvBatches.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvBatches.Size = new Size(960, 200);
+            dgvBatches.TabIndex = 2;
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.Location = new Point(8, 352);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new Size(90, 23);
+            this.btnEdit.TabIndex = 3;
+            this.btnEdit.Text = "Edit Selected";
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new Point(104, 352);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new Size(100, 23);
+            this.btnDelete.TabIndex = 4;
+            this.btnDelete.Text = "Delete Selected";
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewTextBoxColumn1.HeaderText = "Batch Code";
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewTextBoxColumn2.HeaderText = "Date";
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewTextBoxColumn3.HeaderText = "Line";
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            dataGridViewTextBoxColumn3.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.HeaderText = "Shift";
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            dataGridViewTextBoxColumn4.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            dataGridViewTextBoxColumn5.HeaderText = "Model";
+            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            dataGridViewTextBoxColumn5.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            dataGridViewTextBoxColumn6.HeaderText = "Planned";
+            dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            dataGridViewTextBoxColumn6.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            dataGridViewTextBoxColumn7.HeaderText = "Actual";
+            dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            dataGridViewTextBoxColumn7.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            dataGridViewTextBoxColumn8.HeaderText = "Good";
+            dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            dataGridViewTextBoxColumn8.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            dataGridViewTextBoxColumn9.HeaderText = "Defects";
+            dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            dataGridViewTextBoxColumn9.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn10
+            // 
+            dataGridViewTextBoxColumn10.HeaderText = "Defect %";
+            dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            dataGridViewTextBoxColumn10.ReadOnly = true;
+            // 
+            // Production
+            // 
             ClientSize = new Size(980, 390);
+            Controls.Add(grpBatch);
+            Controls.Add(lblGridTitle);
+            Controls.Add(dgvBatches);
+            Controls.Add(this.btnEdit);
+            Controls.Add(this.btnDelete);
+            Name = "Production";
             Text = "Production";
-            Controls.AddRange(new Control[] { grpBatch, lblGridTitle, dgvBatches, btnEdit, btnDelete, btnExport });
-
             grpBatch.ResumeLayout(false);
             grpBatch.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvBatches).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         private GroupBox grpBatch;
@@ -138,7 +370,17 @@
         private TextBox txtBatchCode, txtPlanned, txtActual, txtGood, txtDefect;
         private DateTimePicker dtpBatchDate;
         private ComboBox cboLine, cboShift, cboRodModel;
-        private Button btnSaveBatch, btnClear, btnEdit, btnDelete, btnExport;
         private DataGridView dgvBatches;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+    private Button btnSaveBatch, btnClear, btnEdit, btnDelete;
     }
 }

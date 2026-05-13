@@ -26,7 +26,7 @@ namespace DeepCreekLLC
             dgvBatches.Rows.Add("190413-1.2", "04/13/19", "2", "1", "BR0906E", 100, 95, 68, 27, "28.4%");
         }
 
-        private void ClearForm()
+        public void ClearForm()
         {
             txtBatchCode.Clear();
             dtpBatchDate.Value = DateTime.Today;
@@ -40,7 +40,7 @@ namespace DeepCreekLLC
         }
 
         // Named event handler referenced from the designer
-        private void btnClear_Click(object? sender, EventArgs e)
+        public void btnClear_Click(object? sender, EventArgs e)
         {
             ClearForm();
         }
