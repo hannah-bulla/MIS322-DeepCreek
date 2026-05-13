@@ -1,6 +1,6 @@
-﻿namespace DeepCreekLLC
+namespace DeepCreekLLC
 {
-    partial class Inventory
+    partial class InventoryControl
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -286,7 +286,7 @@
             this.btnEdit.TabIndex = 6;
             this.btnEdit.Text = "Edit Selected";
             // 
-            // Inventory
+            // InventoryControl
             // 
             ClientSize = new Size(980, 395);
             Controls.Add(grpFG);
@@ -296,7 +296,7 @@
             Controls.Add(lblRMGridTitle);
             Controls.Add(dgvRawMaterials);
             Controls.Add(this.btnEdit);
-            Name = "Inventory";
+            Name = "InventoryControl";
             Text = "Inventory";
             grpFG.ResumeLayout(false);
             grpFG.PerformLayout();

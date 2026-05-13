@@ -1,80 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DeepCreekLLC
 {
     public partial class MainMenu : Form
     {
-        private Inventory? inventoryForm;
-        private Production? productionForm;
-        private Quality? qualityForm;
-        private Returns? returnsForm;
+        private readonly Dictionary<int, Control> _tabControls = new Dictionary<int, Control>();
+
         public MainMenu()
         {
             InitializeComponent();
+
+            // Create tab pages for each screen
+            tabControlMain.TabPages.Clear();
+            tabControlMain.TabPages.Add(new TabPage("Inventory"));
+            tabControlMain.TabPages.Add(new TabPage("Quality"));
+            tabControlMain.TabPages.Add(new TabPage("Production"));
+            tabControlMain.TabPages.Add(new TabPage("Returns"));
+
+            tabControlMain.SelectedIndexChanged += TabControlMain_SelectedIndexChanged;
+
+            // Optionally load first tab
+            LoadControlIntoTab(0);
         }
 
-        private void btnInventory_Click(object sender, EventArgs e)
+        private void TabControlMain_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (inventoryForm == null || inventoryForm.IsDisposed)
-            {
-                inventoryForm = new Inventory();
-                inventoryForm.FormClosed += (s, ev) => inventoryForm = null;
-                inventoryForm.Show(this);
-            }
-            else
-            {
-                inventoryForm.BringToFront();
-            }
+            LoadControlIntoTab(tabControlMain.SelectedIndex);
         }
 
-        private void btnProduction_Click(object sender, EventArgs e)
+        private void LoadControlIntoTab(int index)
         {
-            if (productionForm == null || productionForm.IsDisposed)
+            var tp = tabControlMain.TabPages[index];
+            if (tp.Controls.Count > 0) return;
+
+            Control ctrl = index switch
             {
-                productionForm = new Production();
-                productionForm.FormClosed += (s, ev) => productionForm = null;
-                productionForm.Show(this);
-            }
-            else
-            {
-                productionForm.BringToFront();
-            }
+                0 => new InventoryControl(),
+                1 => new QualityControl(),
+                2 => new ProductionControl(),
+                3 => new ReturnsControl(),
+                _ => null
+            };
+
+            if (ctrl == null) return;
+
+            ctrl.Dock = DockStyle.Fill;
+            tp.Controls.Add(ctrl);
+            _tabControls[index] = ctrl;
         }
 
-        private void btnQuality_Click(object sender, EventArgs e)
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            if (qualityForm == null || qualityForm.IsDisposed)
-            {
-                qualityForm = new Quality();
-                qualityForm.FormClosed += (s, ev) => qualityForm = null;
-                qualityForm.Show(this);
-            }
-            else
-            {
-                qualityForm.BringToFront();
-            }
-        }
-
-        private void btnReturns_Click(object sender, EventArgs e)
-        {
-            if (returnsForm == null || returnsForm.IsDisposed)
-            {
-                returnsForm = new Returns();
-                returnsForm.FormClosed += (s, ev) => returnsForm = null;
-                returnsForm.Show(this);
-            }
-            else
-            {
-                returnsForm.BringToFront();
-            }
+            foreach (var c in _tabControls.Values) c?.Dispose();
+            base.OnFormClosing(e);
         }
     }
 }

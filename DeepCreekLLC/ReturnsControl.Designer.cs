@@ -1,6 +1,6 @@
-﻿namespace DeepCreekLLC
+namespace DeepCreekLLC
 {
-    partial class CustomerReturns
+    partial class ReturnsControl
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -302,7 +302,7 @@
             dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
             dataGridViewTextBoxColumn8.ReadOnly = true;
             // 
-            // CustomerReturns
+            // ReturnsControl
             // 
             ClientSize = new Size(984, 506);
             Controls.Add(grpEntry);
@@ -311,7 +311,7 @@
             Controls.Add(btnEdit);
             Controls.Add(btnDelete);
             Controls.Add(btnExport);
-            Name = "CustomerReturns";
+            Name = "ReturnsControl";
             Text = "Customer Returns";
             grpEntry.ResumeLayout(false);
             grpEntry.PerformLayout();
@@ -339,4 +339,3 @@
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
     }
 }
-

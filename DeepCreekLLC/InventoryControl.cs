@@ -1,24 +1,18 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DeepCreekLLC
 {
-    public partial class Inventory : Form
+    public partial class InventoryControl : UserControl
     {
-        public Inventory()
+        public InventoryControl()
         {
             InitializeComponent();
+
             // Configure DataGridView columns at runtime to avoid designer parse issues
             if (dgvFinishedGoods != null && dgvFinishedGoods.Columns.Count == 0)
             {
-                dgvFinishedGoods.Columns.Add("InvID", "Inv ID");
+                dgvFinishedGoods.Columns.Add("InvID", "Inventory ID");
                 dgvFinishedGoods.Columns.Add("Batch", "Batch");
                 dgvFinishedGoods.Columns.Add("Model", "Model");
                 dgvFinishedGoods.Columns.Add("Qty", "Qty");
@@ -36,7 +30,6 @@ namespace DeepCreekLLC
 
         private void ClearFGForm()
         {
-            // Reset finished goods inputs to their default states
             if (txtFGQty != null)
                 txtFGQty.Clear();
 
@@ -55,10 +48,8 @@ namespace DeepCreekLLC
 
         public void ClearForm()
         {
-            // Clear Finished Goods group
             ClearFGForm();
 
-            // Clear Adjustment group
             if (txtAdjQty != null)
                 txtAdjQty.Clear();
 
