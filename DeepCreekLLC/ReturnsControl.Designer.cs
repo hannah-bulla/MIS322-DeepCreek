@@ -27,13 +27,10 @@ namespace DeepCreekLLC
             cboResolution = new ComboBox();
             lblReason = new Label();
             txtReason = new TextBox();
-            btnSave = new Button();
-            btnClear = new Button();
+            this.btnSave = new Button();
+            this.btnClear = new Button();
             lblGridTitle = new Label();
             dgvReturns = new DataGridView();
-            btnEdit = new Button();
-            btnDelete = new Button();
-            btnExport = new Button();
             dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
@@ -42,6 +39,8 @@ namespace DeepCreekLLC
             dataGridViewTextBoxColumn6 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn7 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn8 = new DataGridViewTextBoxColumn();
+            this.btnEdit = new Button();
+            this.btnDelete = new Button();
             grpEntry.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvReturns).BeginInit();
             SuspendLayout();
@@ -62,8 +61,8 @@ namespace DeepCreekLLC
             grpEntry.Controls.Add(cboResolution);
             grpEntry.Controls.Add(lblReason);
             grpEntry.Controls.Add(txtReason);
-            grpEntry.Controls.Add(btnSave);
-            grpEntry.Controls.Add(btnClear);
+            grpEntry.Controls.Add(this.btnSave);
+            grpEntry.Controls.Add(this.btnClear);
             grpEntry.Location = new Point(8, 8);
             grpEntry.Name = "grpEntry";
             grpEntry.Size = new Size(964, 218);
@@ -190,21 +189,21 @@ namespace DeepCreekLLC
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(8, 185);
-            btnSave.Name = "btnSave";
-            btnSave.Size = new Size(90, 23);
-            btnSave.TabIndex = 14;
-            btnSave.Text = "Save Return";
-            btnSave.Click += BtnSave_Click;
+            this.btnSave.Location = new Point(8, 185);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new Size(90, 23);
+            this.btnSave.TabIndex = 14;
+            this.btnSave.Text = "Save Return";
+            this.btnSave.Click += this.BtnSave_Click;
             // 
             // btnClear
             // 
-            btnClear.Location = new Point(104, 185);
-            btnClear.Name = "btnClear";
-            btnClear.Size = new Size(80, 23);
-            btnClear.TabIndex = 15;
-            btnClear.Text = "Clear Form";
-            btnClear.Click += BtnClear_Click;
+            this.btnClear.Location = new Point(104, 185);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new Size(80, 23);
+            this.btnClear.TabIndex = 15;
+            this.btnClear.Text = "Clear Form";
+            this.btnClear.Click += this.BtnClear_Click;
             // 
             // lblGridTitle
             // 
@@ -228,31 +227,6 @@ namespace DeepCreekLLC
             dgvReturns.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvReturns.Size = new Size(964, 200);
             dgvReturns.TabIndex = 2;
-            // 
-            // btnEdit
-            // 
-            btnEdit.Location = new Point(8, 471);
-            btnEdit.Name = "btnEdit";
-            btnEdit.Size = new Size(90, 23);
-            btnEdit.TabIndex = 3;
-            btnEdit.Text = "Edit Selected";
-            // 
-            // btnDelete
-            // 
-            btnDelete.Location = new Point(104, 471);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(105, 23);
-            btnDelete.TabIndex = 4;
-            btnDelete.Text = "Delete Selected";
-            btnDelete.Click += BtnDelete_Click;
-            // 
-            // btnExport
-            // 
-            btnExport.Location = new Point(215, 471);
-            btnExport.Name = "btnExport";
-            btnExport.Size = new Size(85, 23);
-            btnExport.TabIndex = 5;
-            btnExport.Text = "Export Grid";
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -302,17 +276,32 @@ namespace DeepCreekLLC
             dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
             dataGridViewTextBoxColumn8.ReadOnly = true;
             // 
+            // btnEdit
+            // 
+            this.btnEdit.Location = new Point(8, 471);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new Size(90, 23);
+            this.btnEdit.TabIndex = 3;
+            this.btnEdit.Text = "Edit Selected";
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new Point(104, 471);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new Size(105, 23);
+            this.btnDelete.TabIndex = 4;
+            this.btnDelete.Text = "Delete Selected";
+            this.btnDelete.Click += this.BtnDelete_Click;
+            // 
             // ReturnsControl
             // 
-            ClientSize = new Size(984, 506);
             Controls.Add(grpEntry);
             Controls.Add(lblGridTitle);
             Controls.Add(dgvReturns);
-            Controls.Add(btnEdit);
-            Controls.Add(btnDelete);
-            Controls.Add(btnExport);
+            Controls.Add(this.btnEdit);
+            Controls.Add(this.btnDelete);
             Name = "ReturnsControl";
-            Text = "Customer Returns";
+            Size = new Size(984, 506);
             grpEntry.ResumeLayout(false);
             grpEntry.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvReturns).EndInit();
@@ -327,8 +316,8 @@ namespace DeepCreekLLC
         private TextBox txtAuthCode, txtCustomer, txtBatchCode, txtReason;
         private DateTimePicker dtpDateRcvd;
         private ComboBox cboRodModel, cboResolution;
-        private Button btnSave, btnClear, btnEdit, btnDelete, btnExport;
         private DataGridView dgvReturns;
+        private Button btnSave, btnClear, btnEdit, btnDelete;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
