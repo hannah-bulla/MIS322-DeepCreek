@@ -1,16 +1,28 @@
+using DeepCreekLLC.Database;
+
 namespace DeepCreekLLC
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+
+#if DEBUG
+            // Reset the database every time the app runs in Debug mode
+            try
+            {
+                DbReset.ResetDatabase();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"DB reset failed:\n{ex.Message}",
+                    "Reset Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+#endif
+
             Application.Run(new MainMenu());
         }
     }

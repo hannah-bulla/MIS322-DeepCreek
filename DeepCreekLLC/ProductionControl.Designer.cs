@@ -238,6 +238,7 @@ namespace DeepCreekLLC
             this.btnSaveBatch.Size = new Size(85, 23);
             this.btnSaveBatch.TabIndex = 18;
             this.btnSaveBatch.Text = "Save Batch";
+            this.btnSaveBatch.Click += this.btnSaveBatch_Click;
             // 
             // btnClear
             // 
@@ -278,6 +279,7 @@ namespace DeepCreekLLC
             this.btnEdit.Size = new Size(90, 23);
             this.btnEdit.TabIndex = 3;
             this.btnEdit.Text = "Edit Selected";
+            this.btnEdit.Click += this.btnEdit_Click;
             // 
             // btnDelete
             // 
@@ -286,6 +288,7 @@ namespace DeepCreekLLC
             this.btnDelete.Size = new Size(100, 23);
             this.btnDelete.TabIndex = 4;
             this.btnDelete.Text = "Delete Selected";
+            this.btnDelete.Click += this.btnDelete_Click;
             // 
             // dataGridViewTextBoxColumn1
             // 
