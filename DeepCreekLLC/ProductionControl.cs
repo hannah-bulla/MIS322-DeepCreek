@@ -13,6 +13,9 @@ namespace DeepCreekLLC
             InitializeComponent();
             LoadRodModels();
             LoadGrid();
+
+            // Auto-fill form when a row is clicked
+            dgvBatches.SelectionChanged += dgvBatches_SelectionChanged;
         }
 
         // LOAD
@@ -227,6 +230,15 @@ namespace DeepCreekLLC
         }
 
         public void btnClear_Click(object sender, EventArgs e) => ClearForm();
+
+        private void dgvBatches_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvBatches.CurrentRow == null) return;
+            if (dgvBatches.CurrentRow.Tag == null) return;
+
+            // Reuse the exact same logic as Edit Selected
+            btnEdit_Click(sender, e);
+        }
 
         public void InitializeForDesignMode() { }
     }
