@@ -7,31 +7,45 @@ namespace DeepCreekLLC.Database
     {
         public static void ResetDatabase()
         {
-            const string masterConn =
-                "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=DeepCreekDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+            
+        //    using (SqlConnection sqlConnection = new
+        //        SqlConnection(@"Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=DeepCreekDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False"))
+        //    {
+        //        sqlConnection.Open();
+        //        sqlConnection.ChangeDatabase("master");
 
-            string scriptPath = Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory, "ResetDb.sql");
+        //        string rollbackCommand = @"ALTER DATABASE DeepCreekDB SET SINGLE_USER WITH ROLLBACK IMMEDIATE";
+        //        SqlCommand deleteCommand = new SqlCommand(rollbackCommand, sqlConnection);
+        //        deleteCommand.ExecuteNonQuery();
 
-            if (!File.Exists(scriptPath))
-                throw new FileNotFoundException($"Reset script not found at:\n{scriptPath}");
+        //        string dropCommand = @"DROP DATABASE DeepCreekDB";
+        //        deleteCommand = new SqlCommand(dropCommand, sqlConnection);
+        //        deleteCommand.ExecuteNonQuery();
 
-            string fullScript = File.ReadAllText(scriptPath);
-            string[] batches = fullScript.Split(
-                new[] { "\r\nGO", "\nGO", "\r\ngo", "\ngo" },
-                StringSplitOptions.RemoveEmptyEntries);
+        //    }
 
-            using var conn = new SqlConnection(masterConn);
-            conn.Open();
-            foreach (var batch in batches)
-            {
-                string trimmed = batch.Trim();
-                if (string.IsNullOrWhiteSpace(trimmed)) continue;
+            //    string scriptPath = Path.Combine(
+            //        AppDomain.CurrentDomain.BaseDirectory, "ResetDb.sql");
 
-                using var cmd = new SqlCommand(trimmed, conn);
-                cmd.CommandTimeout = 60;
-                cmd.ExecuteNonQuery();
-            }
+            //if (!File.Exists(scriptPath))
+            //    throw new FileNotFoundException($"Reset script not found at:\n{scriptPath}");
+
+            //string fullScript = File.ReadAllText(scriptPath);
+            //string[] batches = fullScript.Split(
+            //    new[] { "\r\nGO", "\nGO", "\r\ngo", "\ngo" },
+            //    StringSplitOptions.RemoveEmptyEntries);
+
+            //using var conn = new SqlConnection(sqlConnection);
+            //conn.Open();
+            //foreach (var batch in batches)
+            //{
+            //    string trimmed = batch.Trim();
+            //    if (string.IsNullOrWhiteSpace(trimmed)) continue;
+
+            //    using var cmd = new SqlCommand(trimmed, conn);
+            //    cmd.CommandTimeout = 60;
+            //    cmd.ExecuteNonQuery();
+            //}
         }
     }
 }

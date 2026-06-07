@@ -13,6 +13,7 @@ namespace DeepCreekLLC
             InitializeComponent();
             LoadRodModels();
             LoadGrid();
+            ClearForm();
 
             // Auto-fill form when a row is clicked
             dgvBatches.SelectionChanged += dgvBatches_SelectionChanged;
@@ -104,6 +105,9 @@ namespace DeepCreekLLC
                 MessageBox.Show($"Error saving batch:\n{ex.Message}",
                     "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            //make all spots empty after saving and highlight the one created in the batch grid
+            //Pop up saying that it was successfully saved
         }
 
         // EDIT
@@ -135,7 +139,8 @@ namespace DeepCreekLLC
             txtGood.Text = row.Cells[7].Value?.ToString() ?? "";
             txtDefect.Text = row.Cells[8].Value?.ToString() ?? "";
 
-            btnSaveBatch.Text = "Update Batch";
+
+            //clear everything and nothing selected. form saying it was successfully editted
         }
 
         // DELETE
@@ -155,6 +160,8 @@ namespace DeepCreekLLC
                 int batchID = (int)dgvBatches.CurrentRow.Tag;
                 ProductionRepository.DeleteBatch(batchID);
                 LoadGrid();
+
+                //successfully deleted
             }
             catch (Exception ex)
             {
@@ -162,6 +169,8 @@ namespace DeepCreekLLC
                     "The batch may have linked QA inspections or inventory records.",
                     "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            //Form is cleared and nothing is selected. Delete successful pop up
         }
 
         // HELPERS
@@ -220,9 +229,9 @@ namespace DeepCreekLLC
         {
             txtBatchCode.Clear();
             dtpBatchDate.Value = DateTime.Today;
-            if (cboLine.Items.Count > 0) cboLine.SelectedIndex = 0;
-            if (cboShift.Items.Count > 0) cboShift.SelectedIndex = 0;
-            if (cboRodModel.Items.Count > 0) cboRodModel.SelectedIndex = 0;
+            if (cboLine.Items.Count > 0) cboLine.SelectedIndex = -1;
+            if (cboShift.Items.Count > 0) cboShift.SelectedIndex = -1;
+            if (cboRodModel.Items.Count > 0) cboRodModel.SelectedIndex = -1;
             txtPlanned.Clear(); txtActual.Clear();
             txtGood.Clear(); txtDefect.Clear();
             _editingBatchID = -1;
