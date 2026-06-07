@@ -8,7 +8,7 @@ namespace DeepCreekLLC.Database
         public static void ResetDatabase()
         {
             const string masterConn =
-                "Server=(localdb)\\MSSQLLocalDB;Database=master;Trusted_Connection=True;TrustServerCertificate=True;";
+                "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=DeepCreekDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
 
             string scriptPath = Path.Combine(
                 AppDomain.CurrentDomain.BaseDirectory, "ResetDb.sql");
