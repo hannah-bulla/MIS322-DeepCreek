@@ -11,7 +11,7 @@ namespace DeepCreekLLC.Database
     {
         // Change "localhost" to your actual server name from SSMS
         private const string ConnectionString =
-            "Server=(MSI)\\NEWSQLSERVER;Database=DeepCreekDB;Trusted_Connection=True;TrustServerCertificate=True;";
+            "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=DeepCreekDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False;";
 
         public static SqlConnection GetConnection()
         {
