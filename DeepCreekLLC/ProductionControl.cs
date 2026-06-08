@@ -81,7 +81,10 @@ namespace DeepCreekLLC
 
         private void btnSaveBatch_Click(object sender, EventArgs e)
         {
-            if (!ValidateForm()) return;
+            if (!ValidateForm())
+            {
+                return;
+            }
 
             try
             {
@@ -99,6 +102,8 @@ namespace DeepCreekLLC
 
                 ClearForm();
                 LoadGrid();
+                MessageBox.Show("Entry has successfully been saved.", "Entry Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+       
             }
             catch (Exception ex)
             {
@@ -106,8 +111,7 @@ namespace DeepCreekLLC
                     "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            //make all spots empty after saving and highlight the one created in the batch grid
-            //Pop up saying that it was successfully saved
+            
         }
 
         // EDIT
@@ -116,31 +120,47 @@ namespace DeepCreekLLC
         {
             if (dgvBatches.CurrentRow == null) return;
 
-            var row = dgvBatches.CurrentRow;
-            _editingBatchID = (int)row.Tag;
-
-            txtBatchCode.Text = row.Cells[0].Value?.ToString() ?? "";
-            dtpBatchDate.Value = DateTime.TryParse(
-                row.Cells[1].Value?.ToString(), out var d) ? d : DateTime.Today;
-
-            SetComboByText(cboLine, "Line " + row.Cells[2].Value);
-            SetComboByText(cboShift, row.Cells[3].Value?.ToString() ?? "");
-
-            // Match rod model combo by model code
-            var modelCode = row.Cells[4].Value?.ToString() ?? "";
-            for (int i = 0; i < cboRodModel.Items.Count; i++)
+            if (!ValidateForm())
             {
-                if (((RodModelItem)cboRodModel.Items[i]).DisplayText.StartsWith(modelCode))
-                { cboRodModel.SelectedIndex = i; break; }
+                return;
             }
 
-            txtPlanned.Text = row.Cells[5].Value?.ToString() ?? "";
-            txtActual.Text = row.Cells[6].Value?.ToString() ?? "";
-            txtGood.Text = row.Cells[7].Value?.ToString() ?? "";
-            txtDefect.Text = row.Cells[8].Value?.ToString() ?? "";
+            try
+            {
+                var row = dgvBatches.CurrentRow;
 
+                _editingBatchID = (int)row.Tag;
 
-            //clear everything and nothing selected. form saying it was successfully editted
+                txtBatchCode.Text = row.Cells[0].Value?.ToString() ?? "";
+                dtpBatchDate.Value = DateTime.TryParse(
+                    row.Cells[1].Value?.ToString(), out var d) ? d : DateTime.Today;
+
+                SetComboByText(cboLine, "Line " + row.Cells[2].Value);
+                SetComboByText(cboShift, row.Cells[3].Value?.ToString() ?? "");
+
+                // Match rod model combo by model code
+                var modelCode = row.Cells[4].Value?.ToString() ?? "";
+                for (int i = 0; i < cboRodModel.Items.Count; i++)
+                {
+                    if (((RodModelItem)cboRodModel.Items[i]).DisplayText.StartsWith(modelCode))
+                    { cboRodModel.SelectedIndex = i; break; }
+                }
+
+                txtPlanned.Text = row.Cells[5].Value?.ToString() ?? "";
+                txtActual.Text = row.Cells[6].Value?.ToString() ?? "";
+                txtGood.Text = row.Cells[7].Value?.ToString() ?? "";
+                txtDefect.Text = row.Cells[8].Value?.ToString() ?? "";
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error when saving batch:\n{ex.Message}",
+                    "Error Editing Data", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            //clear everything and nothing selected. form saying it was successfully editted. there is no verification here
+            //MessageBox.Show("Entry has successfully been edited.", "Entry Edited", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
         }
 
         // DELETE
@@ -148,6 +168,11 @@ namespace DeepCreekLLC
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (dgvBatches.CurrentRow == null) return;
+
+            if (!ValidateForm())
+            {
+                return;
+            }
 
             var confirm = MessageBox.Show(
                 "Delete this production batch? This cannot be undone.",
@@ -157,20 +182,24 @@ namespace DeepCreekLLC
 
             try
             {
+                //successfully deleted 
+                //Form is cleared and nothing is selected. Delete successful pop up
+                //if validate form = true -> run the success code, if not go exit try and end
+
                 int batchID = (int)dgvBatches.CurrentRow.Tag;
                 ProductionRepository.DeleteBatch(batchID);
                 LoadGrid();
+                ClearForm();
+                MessageBox.Show("Entry has successfully been deleted.", "Entry Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                //successfully deleted
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error deleting batch:\n{ex.Message}\n\n" +
                     "The batch may have linked QA inspections or inventory records.",
                     "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            //Form is cleared and nothing is selected. Delete successful pop up
+            }   
+            
         }
 
         // HELPERS
@@ -200,6 +229,16 @@ namespace DeepCreekLLC
                 MessageBoxButtons.OK, MessageBoxIcon.Warning); return false;
             }
 
+            //There must be numbers in the planned qty, actual, good, and defect (no nulls)
+            if (string.IsNullOrWhiteSpace(txtPlanned.Text) ||
+                    string.IsNullOrWhiteSpace(txtActual.Text) ||
+                    string.IsNullOrWhiteSpace(txtGood.Text) ||
+                    string.IsNullOrWhiteSpace(txtDefect.Text))
+            {
+                MessageBox.Show("Planned, Actual, Good, and Defect must have values.", "Validation",
+                MessageBoxButtons.OK, MessageBoxIcon.Warning); return false;
+            }
+
             if (!int.TryParse(txtPlanned.Text, out _) ||
                 !int.TryParse(txtActual.Text, out _) ||
                 !int.TryParse(txtGood.Text, out _) ||
@@ -215,6 +254,27 @@ namespace DeepCreekLLC
                 MessageBoxButtons.OK, MessageBoxIcon.Warning); return false;
             }
 
+            //Must have selected production line
+            if (cboLine.SelectedItem is null)
+            {
+                MessageBox.Show("Please select a production line.", "Validation",
+                MessageBoxButtons.OK, MessageBoxIcon.Warning); return false;
+            }
+
+            //Must have selected shift
+            if (cboShift.SelectedItem is null)
+            {
+                MessageBox.Show("Please select a shift.", "Validation",
+                MessageBoxButtons.OK, MessageBoxIcon.Warning); return false;
+            }
+
+            //The date must be in the past and no future dates
+            if (dtpBatchDate.Value.Date > DateTime.Today)
+            {
+                MessageBox.Show("Please select a valid date.", "Validation",
+                MessageBoxButtons.OK, MessageBoxIcon.Warning); return false;
+            }
+
             return true;
         }
 
@@ -227,6 +287,13 @@ namespace DeepCreekLLC
 
         public void ClearForm()
         {
+            // Doesn't select anything in the grid
+            dgvBatches.SelectionChanged -= dgvBatches_SelectionChanged;
+            dgvBatches.ClearSelection();
+            dgvBatches.CurrentCell = null;
+            dgvBatches.SelectionChanged += dgvBatches_SelectionChanged;
+
+            //All other entries are cleared and reset
             txtBatchCode.Clear();
             dtpBatchDate.Value = DateTime.Today;
             if (cboLine.Items.Count > 0) cboLine.SelectedIndex = -1;
