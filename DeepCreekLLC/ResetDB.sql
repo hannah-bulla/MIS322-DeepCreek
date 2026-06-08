@@ -1,16 +1,8 @@
 --  DeepCreekDB  –  SQL Server (T-SQL) version
 
 -- Create and select the database
-IF DB_ID('DeepCreekDB') IS NOT NULL
-BEGIN
-    ALTER DATABASE DeepCreekDB SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-    DROP DATABASE DeepCreekDB;
-END
-GO
-
 CREATE DATABASE DeepCreekDB;
 GO
-
 USE DeepCreekDB;
 GO
 
