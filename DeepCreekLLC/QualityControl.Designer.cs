@@ -98,6 +98,7 @@ namespace DeepCreekLLC
             btnSaveInsp.Size = new Size(110, 23);
             btnSaveInsp.TabIndex = 4;
             btnSaveInsp.Text = "Save Inspection";
+            btnSaveInsp.Click += btnSaveInsp_Click;
             // 
             // btnClearHeader
             // 
@@ -128,6 +129,7 @@ namespace DeepCreekLLC
             grpDefect.TabIndex = 1;
             grpDefect.TabStop = false;
             grpDefect.Text = "Defect Detail Entry";
+            btnAddDefect.Click += btnAddDefect_Click;
             // 
             // lblUnit
             // 
@@ -261,6 +263,8 @@ namespace DeepCreekLLC
             btnEdit.Size = new Size(90, 23);
             btnEdit.TabIndex = 4;
             btnEdit.Text = "Edit Selected";
+            btnEdit.Enabled = false;
+            btnEdit.Text = "Edit Later";
             // 
             // btnRemove
             // 
@@ -269,6 +273,7 @@ namespace DeepCreekLLC
             btnRemove.Size = new Size(100, 23);
             btnRemove.TabIndex = 5;
             btnRemove.Text = "Remove Defect";
+            btnRemove.Click += btnRemove_Click;
             // 
             // QualityControl
             // 

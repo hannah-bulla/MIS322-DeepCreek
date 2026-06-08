@@ -40,7 +40,7 @@ namespace DeepCreekLLC.Database
                 new[] { "\r\nGO\r\n", "\nGO\n", "\r\ngo\r\n", "\ngo\n", "\r\nGO", "\nGO" },
                 StringSplitOptions.RemoveEmptyEntries);
 
-            // 3. Connect back to Master to run the creation script (Script must contain "CREATE DATABASE DeepCreekDB")
+            //Connect back to Master to run the creation script (Script must contain "CREATE DATABASE DeepCreekDB")
             using (SqlConnection conn = new SqlConnection(masterConnectionString))
             {
                 conn.Open();
