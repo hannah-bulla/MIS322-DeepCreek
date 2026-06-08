@@ -156,8 +156,6 @@ namespace DeepCreekLLC
             try
             {
                 //successfully deleted 
-                //Form is cleared and nothing is selected. Delete successful pop up
-                //if validate form = true -> run the success code, if not go exit try and end
 
                 int batchID = (int)dgvBatches.CurrentRow.Tag;
                 ProductionRepository.DeleteBatch(batchID);
