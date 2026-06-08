@@ -110,44 +110,22 @@ namespace DeepCreekLLC
         private void btnEdit_Click(object sender, EventArgs e)
         {
             if (dgvBatches.CurrentRow == null) return;
+            if (!ValidateForm())
+            {
+                return;
+            }
 
             try
             {
-                if (!ValidateForm())
-                {
-                    return;
-                }
-                else
-                {
-                    var row = dgvBatches.CurrentRow;
 
-                    _editingBatchID = (int)row.Tag;
+                ProductionBatch updatedBatch = BuildBatchFromForm();
+                updatedBatch.BatchID = _editingBatchID;
 
-                    txtBatchCode.Text = row.Cells[0].Value?.ToString() ?? "";
-                    dtpBatchDate.Value = DateTime.TryParse(
-                        row.Cells[1].Value?.ToString(), out var d) ? d : DateTime.Today;
+                ProductionRepository.UpdateBatch(updatedBatch);
 
-                    SetComboByText(cboLine, "Line " + row.Cells[2].Value);
-                    SetComboByText(cboShift, row.Cells[3].Value?.ToString() ?? "");
-
-                    // Match rod model combo by model code
-                    var modelCode = row.Cells[4].Value?.ToString() ?? "";
-                    for (int i = 0; i < cboRodModel.Items.Count; i++)
-                    {
-                        if (((RodModelItem)cboRodModel.Items[i]).DisplayText.StartsWith(modelCode))
-                        { cboRodModel.SelectedIndex = i; break; }
-                    }
-
-                    txtPlanned.Text = row.Cells[5].Value?.ToString() ?? "";
-                    txtActual.Text = row.Cells[6].Value?.ToString() ?? "";
-                    txtGood.Text = row.Cells[7].Value?.ToString() ?? "";
-                    txtDefect.Text = row.Cells[8].Value?.ToString() ?? "";
-
-                    LoadGrid();
-                    ClearForm();
-                    MessageBox.Show("Entry has successfully been edited.", "Entry Edited", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                }
+                LoadGrid();
+                ClearForm();
+                MessageBox.Show("Entry has successfully been edited.", "Entry Edited", MessageBoxButtons.OK, MessageBoxIcon.Information); 
 
             }
             catch (Exception ex)
