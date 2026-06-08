@@ -89,13 +89,7 @@ namespace DeepCreekLLC
             try
             {
 
-                ProductionBatch newBatch = new ProductionBatch
-                {
-                    //
-                }
-
-                // CALL YOUR DATABASE LOGIC TO COMMIT CHANGES
-                ProductionRepository.InsertBatch(newBatch);
+                ProductionRepository.InsertBatch(BuildBatchFromForm());
 
                 ClearForm();
                 LoadGrid();
