@@ -24,6 +24,10 @@ namespace DeepCreekLLC
         private void LoadRodModels()
         {
             cboRodModel.Items.Clear();
+
+            //Sets the display field first before adding other subjects
+            cboRodModel.DisplayMember = "DisplayText";
+
             try
             {
                 foreach (var m in ProductionRepository.GetRodModels())
@@ -31,7 +35,7 @@ namespace DeepCreekLLC
                     // Store the whole object so we can get the ID on save
                     cboRodModel.Items.Add(m);
                 }
-                cboRodModel.DisplayMember = "DisplayText";
+
                 if (cboRodModel.Items.Count > 0)
                     cboRodModel.SelectedIndex = 0;
             }
@@ -44,7 +48,9 @@ namespace DeepCreekLLC
 
         private void LoadGrid()
         {
+            dgvBatches.SuspendLayout();
             dgvBatches.Rows.Clear();
+
             try
             {
                 foreach (var b in ProductionRepository.GetAllBatches())
@@ -74,6 +80,10 @@ namespace DeepCreekLLC
             {
                 MessageBox.Show($"Error loading batches:\n{ex.Message}",
                     "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                dgvBatches.ResumeLayout();
             }
         }
 

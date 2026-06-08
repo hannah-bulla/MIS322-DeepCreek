@@ -7,45 +7,56 @@ namespace DeepCreekLLC.Database
     {
         public static void ResetDatabase()
         {
-            
-        //    using (SqlConnection sqlConnection = new
-        //        SqlConnection(@"Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=DeepCreekDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False"))
-        //    {
-        //        sqlConnection.Open();
-        //        sqlConnection.ChangeDatabase("master");
+            // Establishes master connection string
+            string masterConnectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
-        //        string rollbackCommand = @"ALTER DATABASE DeepCreekDB SET SINGLE_USER WITH ROLLBACK IMMEDIATE";
-        //        SqlCommand deleteCommand = new SqlCommand(rollbackCommand, sqlConnection);
-        //        deleteCommand.ExecuteNonQuery();
+            using (SqlConnection sqlConnection = new SqlConnection(masterConnectionString))
+            {
+                sqlConnection.Open();
 
-        //        string dropCommand = @"DROP DATABASE DeepCreekDB";
-        //        deleteCommand = new SqlCommand(dropCommand, sqlConnection);
-        //        deleteCommand.ExecuteNonQuery();
+                string rollbackCommand = @"ALTER DATABASE DeepCreekDB SET SINGLE_USER WITH ROLLBACK IMMEDIATE";
+                using (SqlCommand cmd = new SqlCommand(rollbackCommand, sqlConnection))
+                {
+                    cmd.ExecuteNonQuery();
+                }
 
-        //    }
+                string dropCommand = @"DROP DATABASE DeepCreekDB";
+                using (SqlCommand cmd = new SqlCommand(dropCommand, sqlConnection))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
 
-            //    string scriptPath = Path.Combine(
-            //        AppDomain.CurrentDomain.BaseDirectory, "ResetDb.sql");
+            //Locates the setup SQL initialization script
+            string scriptPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ResetDb.sql");
 
-            //if (!File.Exists(scriptPath))
-            //    throw new FileNotFoundException($"Reset script not found at:\n{scriptPath}");
+            if (!File.Exists(scriptPath))
+                throw new FileNotFoundException($"Reset script not found at:\n{scriptPath}");
 
-            //string fullScript = File.ReadAllText(scriptPath);
-            //string[] batches = fullScript.Split(
-            //    new[] { "\r\nGO", "\nGO", "\r\ngo", "\ngo" },
-            //    StringSplitOptions.RemoveEmptyEntries);
+            string fullScript = File.ReadAllText(scriptPath);
 
-            //using var conn = new SqlConnection(sqlConnection);
-            //conn.Open();
-            //foreach (var batch in batches)
-            //{
-            //    string trimmed = batch.Trim();
-            //    if (string.IsNullOrWhiteSpace(trimmed)) continue;
+            // Splits the script safely by SQL Server 'GO' batch parameters
+            string[] batches = fullScript.Split(
+                new[] { "\r\nGO\r\n", "\nGO\n", "\r\ngo\r\n", "\ngo\n", "\r\nGO", "\nGO" },
+                StringSplitOptions.RemoveEmptyEntries);
 
-            //    using var cmd = new SqlCommand(trimmed, conn);
-            //    cmd.CommandTimeout = 60;
-            //    cmd.ExecuteNonQuery();
-            //}
+            // 3. Connect back to Master to run the creation script (Script must contain "CREATE DATABASE DeepCreekDB")
+            using (SqlConnection conn = new SqlConnection(masterConnectionString))
+            {
+                conn.Open();
+                foreach (var batch in batches)
+                {
+                    string trimmed = batch.Trim();
+                    if (string.IsNullOrWhiteSpace(trimmed)) continue;
+
+                    using (SqlCommand cmd = new SqlCommand(trimmed, conn))
+                    {
+                        cmd.CommandTimeout = 60;
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+            }
         }
     }
 }
