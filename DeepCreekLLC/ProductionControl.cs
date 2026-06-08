@@ -88,17 +88,14 @@ namespace DeepCreekLLC
 
             try
             {
-                var batch = BuildBatchFromForm();
 
-                if (_editingBatchID == -1)
-                    ProductionRepository.InsertBatch(batch);
-                else
+                ProductionBatch newBatch = new ProductionBatch
                 {
-                    batch.BatchID = _editingBatchID;
-                    ProductionRepository.UpdateBatch(batch);
-                    _editingBatchID = -1;
-                    btnSaveBatch.Text = "Save Batch";
+                    //
                 }
+
+                // CALL YOUR DATABASE LOGIC TO COMMIT CHANGES
+                ProductionRepository.InsertBatch(newBatch);
 
                 ClearForm();
                 LoadGrid();
@@ -120,40 +117,43 @@ namespace DeepCreekLLC
         {
             if (dgvBatches.CurrentRow == null) return;
 
-            if (!ValidateForm())
-            {
-                return;
-            }
-
             try
             {
-                var row = dgvBatches.CurrentRow;
-
-                _editingBatchID = (int)row.Tag;
-
-                txtBatchCode.Text = row.Cells[0].Value?.ToString() ?? "";
-                dtpBatchDate.Value = DateTime.TryParse(
-                    row.Cells[1].Value?.ToString(), out var d) ? d : DateTime.Today;
-
-                SetComboByText(cboLine, "Line " + row.Cells[2].Value);
-                SetComboByText(cboShift, row.Cells[3].Value?.ToString() ?? "");
-
-                // Match rod model combo by model code
-                var modelCode = row.Cells[4].Value?.ToString() ?? "";
-                for (int i = 0; i < cboRodModel.Items.Count; i++)
+                if (!ValidateForm())
                 {
-                    if (((RodModelItem)cboRodModel.Items[i]).DisplayText.StartsWith(modelCode))
-                    { cboRodModel.SelectedIndex = i; break; }
+                    return;
                 }
+                else
+                {
+                    var row = dgvBatches.CurrentRow;
 
-                txtPlanned.Text = row.Cells[5].Value?.ToString() ?? "";
-                txtActual.Text = row.Cells[6].Value?.ToString() ?? "";
-                txtGood.Text = row.Cells[7].Value?.ToString() ?? "";
-                txtDefect.Text = row.Cells[8].Value?.ToString() ?? "";
+                    _editingBatchID = (int)row.Tag;
 
-                LoadGrid();
-                ClearForm();
-                MessageBox.Show("Entry has successfully been edited.", "Entry Edited", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    txtBatchCode.Text = row.Cells[0].Value?.ToString() ?? "";
+                    dtpBatchDate.Value = DateTime.TryParse(
+                        row.Cells[1].Value?.ToString(), out var d) ? d : DateTime.Today;
+
+                    SetComboByText(cboLine, "Line " + row.Cells[2].Value);
+                    SetComboByText(cboShift, row.Cells[3].Value?.ToString() ?? "");
+
+                    // Match rod model combo by model code
+                    var modelCode = row.Cells[4].Value?.ToString() ?? "";
+                    for (int i = 0; i < cboRodModel.Items.Count; i++)
+                    {
+                        if (((RodModelItem)cboRodModel.Items[i]).DisplayText.StartsWith(modelCode))
+                        { cboRodModel.SelectedIndex = i; break; }
+                    }
+
+                    txtPlanned.Text = row.Cells[5].Value?.ToString() ?? "";
+                    txtActual.Text = row.Cells[6].Value?.ToString() ?? "";
+                    txtGood.Text = row.Cells[7].Value?.ToString() ?? "";
+                    txtDefect.Text = row.Cells[8].Value?.ToString() ?? "";
+
+                    LoadGrid();
+                    ClearForm();
+                    MessageBox.Show("Entry has successfully been edited.", "Entry Edited", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
 
             }
             catch (Exception ex)
@@ -208,19 +208,69 @@ namespace DeepCreekLLC
 
         private ProductionBatch BuildBatchFromForm()
         {
-            var selectedModel = (RodModelItem)cboRodModel.SelectedItem;
+            // Safe extraction: fallback to a dummy item if casting fails or nothing is selected
+            var selectedModel = cboRodModel.SelectedItem as RodModelItem;
+            int rodModelId = selectedModel != null ? selectedModel.RodModelID : 0;
+
+            // Safe Line calculation: fallback to 1 if index is invalid (-1)
+            int lineNumber = cboLine.SelectedIndex >= 0 ? cboLine.SelectedIndex + 1 : 1;
+
+            // Safe Shift parsing: checks if it's a number, falls back to 1 if it fails
+            int.TryParse(cboShift.Text, out int shiftNum);
+            if (shiftNum == 0) shiftNum = 1; // Default fallback if text wasn't a raw number
+
             return new ProductionBatch
             {
                 BatchCode = txtBatchCode.Text.Trim(),
                 BatchDate = dtpBatchDate.Value.Date,
-                ProductionLineNumber = cboLine.SelectedIndex + 1,  // "Line 1" → 1
-                ShiftNumber = int.Parse(cboShift.Text),
-                RodModelID = selectedModel.RodModelID,
+                ProductionLineNumber = lineNumber,
+                ShiftNumber = shiftNum,
+                RodModelID = rodModelId,
+
                 PlannedQty = int.Parse(txtPlanned.Text),
                 ActualQty = int.Parse(txtActual.Text),
                 GoodUnits = int.Parse(txtGood.Text),
                 DefectUnits = int.Parse(txtDefect.Text)
             };
+        }
+
+        private void LoadSelectedRowToForm()
+        {
+            if (dgvBatches.CurrentRow == null) return;
+
+            try
+            {
+                var row = dgvBatches.CurrentRow;
+                _editingBatchID = (int)row.Tag;
+
+                txtBatchCode.Text = row.Cells[0].Value?.ToString() ?? "";
+                dtpBatchDate.Value = DateTime.TryParse(
+                    row.Cells[1].Value?.ToString(), out var d) ? d : DateTime.Today;
+
+                SetComboByText(cboLine, "Line " + row.Cells[2].Value);
+                SetComboByText(cboShift, row.Cells[3].Value?.ToString() ?? "");
+
+                // Match rod model combo by model code
+                var modelCode = row.Cells[4].Value?.ToString() ?? "";
+                for (int i = 0; i < cboRodModel.Items.Count; i++)
+                {
+                    if (((RodModelItem)cboRodModel.Items[i]).DisplayText.StartsWith(modelCode))
+                    {
+                        cboRodModel.SelectedIndex = i;
+                        break;
+                    }
+                }
+
+                txtPlanned.Text = row.Cells[5].Value?.ToString() ?? "";
+                txtActual.Text = row.Cells[6].Value?.ToString() ?? "";
+                txtGood.Text = row.Cells[7].Value?.ToString() ?? "";
+                txtDefect.Text = row.Cells[8].Value?.ToString() ?? "";
+            }
+            catch (Exception ex)
+            {
+                // Fail silently or log to debug output so clicking around doesn't crash the UI
+                System.Diagnostics.Debug.WriteLine($"Error displaying selected row: {ex.Message}");
+            }
         }
 
         private bool ValidateForm()
@@ -315,7 +365,7 @@ namespace DeepCreekLLC
             if (dgvBatches.CurrentRow.Tag == null) return;
 
             // Reuse the exact same logic as Edit Selected
-            btnEdit_Click(sender, e);
+            LoadSelectedRowToForm();
         }
 
         public void InitializeForDesignMode() { }
