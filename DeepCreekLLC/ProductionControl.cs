@@ -151,15 +151,16 @@ namespace DeepCreekLLC
                 txtGood.Text = row.Cells[7].Value?.ToString() ?? "";
                 txtDefect.Text = row.Cells[8].Value?.ToString() ?? "";
 
+                LoadGrid();
+                ClearForm();
+                MessageBox.Show("Entry has successfully been edited.", "Entry Edited", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error when saving batch:\n{ex.Message}",
                     "Error Editing Data", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            //clear everything and nothing selected. form saying it was successfully editted. there is no verification here
-            //MessageBox.Show("Entry has successfully been edited.", "Entry Edited", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         }
 
@@ -188,6 +189,7 @@ namespace DeepCreekLLC
 
                 int batchID = (int)dgvBatches.CurrentRow.Tag;
                 ProductionRepository.DeleteBatch(batchID);
+
                 LoadGrid();
                 ClearForm();
                 MessageBox.Show("Entry has successfully been deleted.", "Entry Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
