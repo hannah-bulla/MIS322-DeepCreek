@@ -1256,7 +1256,7 @@
             ClientSize = new Size(984, 549);
             Controls.Add(tabControlMain);
             Name = "MainMenu";
-            Text = "Deep Creek LLC Management Main Menu";
+            Text = "Deep Creek LLC Management";
             tabControlMain.ResumeLayout(false);
             tabInventory.ResumeLayout(false);
             tabInventory.PerformLayout();
